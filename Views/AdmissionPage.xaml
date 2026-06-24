@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Background="{DynamicResource ContentBgBrush}">
     <UserControl.Resources>
-        <Style x:Key="AdmInput" TargetType="TextBox" BasedOn="{DynamicResource ModernTextBox}">
+        <Style x:Key="AdmInput" TargetType="TextBox" BasedOn="{StaticResource ModernTextBox}">
             <Setter Property="Height" Value="42"/>
             <Setter Property="Padding" Value="12,0"/>
         </Style>
-        <Style x:Key="AdmCombo" TargetType="ComboBox" BasedOn="{DynamicResource ModernComboBox}">
+        <Style x:Key="AdmCombo" TargetType="ComboBox" BasedOn="{StaticResource ModernComboBox}">
             <Setter Property="Height" Value="42"/>
         </Style>
-        <Style x:Key="AdmDate" TargetType="DatePicker" BasedOn="{DynamicResource ModernDatePicker}">
+        <Style x:Key="AdmDate" TargetType="DatePicker" BasedOn="{StaticResource ModernDatePicker}">
             <Setter Property="Height" Value="42"/>
         </Style>
     </UserControl.Resources>
