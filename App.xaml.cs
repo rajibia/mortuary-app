@@ -155,8 +155,6 @@ public partial class App : Application
     {
         try
         {
-            if (string.IsNullOrEmpty(UpdateService.Token))
-                UpdateService.Token = "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";
             var info = await UpdateService.CheckForUpdateAsync();
             if (info != null)
             {
