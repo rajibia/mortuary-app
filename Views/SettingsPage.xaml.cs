@@ -280,6 +280,7 @@ public partial class SettingsPage : UserControl
 
         if (info == null)
         {
+            UpdateProgressPanel.Visibility = Visibility.Collapsed;
             TxtUpdateStatus.Text = $"v{UpdateService.CurrentVersion} — up to date";
             ToastHelper.ShowInfo("No updates available.");
         }
@@ -293,21 +294,35 @@ public partial class SettingsPage : UserControl
             if (result == MessageBoxResult.Yes)
             {
                 TxtUpdateStatus.Text = "Downloading...";
-                var zipPath = await UpdateService.DownloadUpdateAsync(info.DownloadUrl);
+                UpdateProgressPanel.Visibility = Visibility.Visible;
+                UpdateProgressBar.Value = 0;
+                TxtUpdateProgress.Text = "0%";
+
+                var progress = new Progress<double>(p =>
+                {
+                    UpdateProgressBar.Value = p;
+                    TxtUpdateProgress.Text = $"{p * 100:F0}%";
+                });
+
+                var zipPath = await UpdateService.DownloadUpdateAsync(info.DownloadUrl, progress);
 
                 if (zipPath != null)
                 {
                     TxtUpdateStatus.Text = "Installing...";
+                    UpdateProgressBar.Value = 1;
+                    TxtUpdateProgress.Text = "100%";
                     UpdateService.InstallUpdate(zipPath);
                 }
                 else
                 {
                     TxtUpdateStatus.Text = "Download failed";
+                    UpdateProgressPanel.Visibility = Visibility.Collapsed;
                     ToastHelper.ShowError("Failed to download update.");
                 }
             }
             else
             {
+                UpdateProgressPanel.Visibility = Visibility.Collapsed;
                 TxtUpdateStatus.Text = $"v{info.LatestVersion} available";
             }
         }

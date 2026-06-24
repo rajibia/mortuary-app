@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Net.Http;
 using System.Reflection;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -37,8 +38,15 @@ public static class UpdateService
         set => _token = value ?? "";
     }
 
-    public static Version CurrentVersion =>
-        Assembly.GetExecutingAssembly().GetName().Version ?? new Version(1, 0, 0);
+    public static Version CurrentVersion
+    {
+        get
+        {
+            var location = Assembly.GetExecutingAssembly().Location;
+            var fvi = FileVersionInfo.GetVersionInfo(location);
+            return new Version(fvi.FileMajorPart, fvi.FileMinorPart, fvi.FileBuildPart, fvi.FilePrivatePart);
+        }
+    }
 
     public static async Task<UpdateInfo?> CheckForUpdateAsync()
     {
@@ -84,7 +92,7 @@ public static class UpdateService
         }
     }
 
-    public static async Task<string?> DownloadUpdateAsync(string url)
+    public static async Task<string?> DownloadUpdateAsync(string url, IProgress<double>? progress = null)
     {
         try
         {
@@ -92,11 +100,26 @@ public static class UpdateService
             Directory.CreateDirectory(tempDir);
 
             var zipPath = Path.Combine(tempDir, "update.zip");
-            var resp = await Http.GetAsync(url);
+            using var req = new HttpRequestMessage(HttpMethod.Get, url);
+            if (!string.IsNullOrEmpty(_token))
+                req.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+            var resp = await Http.SendAsync(req, HttpCompletionOption.ResponseHeadersRead);
             resp.EnsureSuccessStatusCode();
 
+            var total = resp.Content.Headers.ContentLength ?? -1L;
             await using var fs = File.Create(zipPath);
-            await resp.Content.CopyToAsync(fs);
+            await using var stream = await resp.Content.ReadAsStreamAsync();
+
+            var buffer = new byte[8192];
+            long read = 0;
+            int bytes;
+            while ((bytes = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+            {
+                await fs.WriteAsync(buffer, 0, bytes);
+                read += bytes;
+                if (progress != null && total > 0)
+                    progress.Report((double)read / total);
+            }
 
             return zipPath;
         }
@@ -111,16 +134,19 @@ public static class UpdateService
         try
         {
             var appDir = AppContext.BaseDirectory;
-            var tempDir = Path.Combine(Path.GetTempPath(), "MortuaryUpdate");
-            var extractedDir = Path.Combine(tempDir, "extracted");
-            var scriptPath = Path.Combine(tempDir, "install.cmd");
+            var sysTemp = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "MortuaryUpdate");
+            var sysExtracted = Path.Combine(sysTemp, "extracted");
 
-            if (Directory.Exists(extractedDir))
-                Directory.Delete(extractedDir, true);
-            ZipFile.ExtractToDirectory(zipPath, extractedDir);
+            Directory.CreateDirectory(sysTemp);
+            if (Directory.Exists(sysExtracted))
+                Directory.Delete(sysExtracted, true);
+
+            ZipFile.ExtractToDirectory(zipPath, sysExtracted);
 
             var pid = Environment.ProcessId;
+            var logPath = Path.Combine(sysTemp, "install.log");
             var script = $@"@echo off
+echo Update started at %DATE% %TIME% > ""{logPath}""
 :wait
 tasklist /FI ""PID eq {pid}"" 2>nul | find ""{pid}"" >nul
 if not errorlevel 1 (
@@ -128,22 +154,29 @@ if not errorlevel 1 (
     goto wait
 )
 timeout /t 1 /nobreak >nul
-echo Installing update...
-xcopy /y /e /q ""{extractedDir}\*"" ""{appDir}""
+echo Installing update... >> ""{logPath}""
+robocopy ""{sysExtracted}"" ""{appDir}"" /E /IS /IT /R:3 /W:2 /NP >> ""{logPath}""
+echo Copy exit code: %ERRORLEVEL% >> ""{logPath}""
+if %ERRORLEVEL% gtr 7 (
+    echo robocopy FAILED with exit code %ERRORLEVEL% >> ""{logPath}""
+    pause
+    exit /b %ERRORLEVEL%
+)
 start """" ""{appDir}\MortuaryApp.exe""
+echo App launched >> ""{logPath}""
 del ""%~f0""
 ";
-            File.WriteAllText(scriptPath, script);
+            File.WriteAllText(Path.Combine(sysTemp, "install.cmd"), script);
 
-            var psi = new ProcessStartInfo("cmd.exe", $"/c \"{scriptPath}\"")
+            var psi = new ProcessStartInfo("cmd.exe", $"/c \"{Path.Combine(sysTemp, "install.cmd")}\"")
             {
                 Verb = "runas",
                 UseShellExecute = true,
-                CreateNoWindow = true,
-                WindowStyle = ProcessWindowStyle.Hidden
+                WindowStyle = ProcessWindowStyle.Normal
             };
 
             Process.Start(psi);
+            Thread.Sleep(2000);
             Application.Current.Shutdown();
         }
         catch (Exception ex)

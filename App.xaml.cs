@@ -24,6 +24,10 @@ public partial class App : Application
         GlobalFontSettings.FontResolver = new CustomFontResolver();
         DbInitializer.Initialize();
 
+        var ghToken = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
+        if (!string.IsNullOrEmpty(ghToken))
+            UpdateService.Token = ghToken;
+
         if (!IsLicensed())
         {
             var activation = new LicenseActivationWindow();

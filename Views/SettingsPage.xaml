@@ -203,20 +203,34 @@
                     <TextBlock Text="Application Updates" Style="{StaticResource ModernSectionTitle}" Margin="0,0,0,4"/>
                     <TextBlock Text="Check for new versions" Style="{StaticResource ModernCaptionText}" Margin="0,0,0,14"/>
                     <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Name="TxtUpdateStatus" Text="v1.0.0 — up to date"
+                        <TextBlock Grid.Row="0" Grid.Column="0" Name="TxtUpdateStatus" Text="v1.0.0 — up to date"
                                    VerticalAlignment="Center" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                        <Button Grid.Column="2" Name="BtnCheckUpdate" MinWidth="140" Height="36"
+                        <Button Grid.Row="0" Grid.Column="2" Name="BtnCheckUpdate" MinWidth="140" Height="36"
                                 Background="#F59E0B" Foreground="#FFFFFF" BorderThickness="0" Cursor="Hand"
                                 FontSize="13" FontWeight="SemiBold" Padding="14,0" Click="BtnCheckUpdate_Click">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Check for Updates" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
+                        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,10,0,0" x:Name="UpdateProgressPanel" Visibility="Collapsed">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ProgressBar Grid.Column="0" x:Name="UpdateProgressBar" Height="6" Maximum="1" Minimum="0"
+                                         Foreground="#F59E0B" Background="#E2E8F0" BorderThickness="0"/>
+                            <TextBlock Grid.Column="1" x:Name="TxtUpdateProgress" Text="0%" Margin="10,0,0,0"
+                                       VerticalAlignment="Center" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                        </Grid>
                     </Grid>
                 </StackPanel>
             </Border>
