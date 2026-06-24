@@ -1,0 +1,32 @@
+<UserControl x:Class="MortuaryApp.Controls.PhoneInput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="clr-namespace:MortuaryApp.Models">
+    <StackPanel>
+        <Border Height="36" BorderThickness="1" BorderBrush="#D1D5DB" Background="{DynamicResource ContentBgBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" x:Name="CboCountry" Width="110"
+                          ItemsSource="{x:Static models:CountryCode.All}"
+                          DisplayMemberPath="DisplayText"
+                          SelectedIndex="0"
+                          BorderThickness="0" Background="Transparent"
+                          FontSize="11" Foreground="#6B7280"
+                          VerticalAlignment="Center" Padding="6,0"
+                          IsTabStop="False"/>
+                <Border Grid.Column="1" BorderThickness="0" BorderBrush="#D1D5DB">
+                    <TextBox x:Name="TxtPhone" BorderThickness="0" Background="Transparent"
+                             FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}"
+                             Padding="8,0" VerticalAlignment="Center"
+                             LostFocus="TxtPhone_LostFocus"/>
+                </Border>
+                <TextBlock Grid.Column="2" x:Name="TxtValidation" FontSize="12"
+                           VerticalAlignment="Center" Margin="0,0,6,0" Visibility="Collapsed"/>
+            </Grid>
+        </Border>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,250 @@
+﻿<UserControl x:Class="MortuaryApp.Views.AdmissionPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{DynamicResource ContentBgBrush}">
+    <UserControl.Resources>
+        <Style x:Key="AdmInput" TargetType="TextBox" BasedOn="{DynamicResource ModernTextBox}">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Padding" Value="12,0"/>
+        </Style>
+        <Style x:Key="AdmCombo" TargetType="ComboBox" BasedOn="{DynamicResource ModernComboBox}">
+            <Setter Property="Height" Value="42"/>
+        </Style>
+        <Style x:Key="AdmDate" TargetType="DatePicker" BasedOn="{DynamicResource ModernDatePicker}">
+            <Setter Property="Height" Value="42"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Padding="24,20,24,12">
+            <StackPanel>
+                <StackPanel Margin="0,0,0,20">
+                    <TextBlock Text="Admission" Style="{StaticResource ModernPageTitle}" />
+                    <TextBlock Text="Register a new deceased person and assign storage" Style="{StaticResource ModernBodyText}" Margin="0,2,0,0" />
+                </StackPanel>
+
+                <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushTheme}" BorderThickness="1" Margin="0,0,0,16" Padding="0">
+                    <StackPanel>
+                        <Border Background="#F8FAFC" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BorderBrushTheme}" Padding="20,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Width="3" Height="18" Background="#F59E0B" Margin="0,0,12,0"/>
+                                <TextBlock Grid.Column="1" Text="DECEASED INFORMATION" FontSize="13" FontWeight="SemiBold" Foreground="#0F172A" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <Grid Margin="20,16,20,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" /><ColumnDefinition Width="16" />
+                                <ColumnDefinition Width="*" /><ColumnDefinition Width="16" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="14" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="Full Name" Style="{DynamicResource FieldLabel}" />
+                                <TextBox x:Name="TxtName" Style="{StaticResource AdmInput}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2">
+                                <TextBlock Text="Gender" Style="{DynamicResource FieldLabel}" />
+                                <ComboBox x:Name="CboGender" Style="{StaticResource AdmCombo}">
+                                    <ComboBoxItem Content="Male" />
+                                    <ComboBoxItem Content="Female" />
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="4">
+                                <TextBlock Text="Date of Birth" Style="{DynamicResource FieldLabel}" />
+                                <DatePicker x:Name="DpDob" Style="{StaticResource AdmDate}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="0">
+                                <TextBlock Text="Date of Death" Style="{DynamicResource FieldLabel}" />
+                                <DatePicker x:Name="DpDod" Style="{StaticResource AdmDate}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="2">
+                                <TextBlock Text="Cause of Death" Style="{DynamicResource FieldLabel}" />
+                                <TextBox x:Name="TxtCause" Style="{StaticResource AdmInput}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="4">
+                                <TextBlock Text="Source / Hospital" Style="{DynamicResource FieldLabel}" />
+                                <TextBox x:Name="TxtSource" Style="{StaticResource AdmInput}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushTheme}" BorderThickness="1" Margin="0,0,0,16" Padding="0">
+                    <StackPanel>
+                        <Border Background="#F8FAFC" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BorderBrushTheme}" Padding="20,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Width="3" Height="18" Background="#F59E0B" Margin="0,0,12,0"/>
+                                <TextBlock Grid.Column="1" Text="DEPOSITOR INFORMATION" FontSize="13" FontWeight="SemiBold" Foreground="#0F172A" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <Grid Margin="20,16,20,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" /><ColumnDefinition Width="16" />
+                                <ColumnDefinition Width="*" /><ColumnDefinition Width="16" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="14" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="Depositor Full Name" Style="{DynamicResource FieldLabel}" />
+                                <TextBox x:Name="TxtDepositorName" Style="{StaticResource AdmInput}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2">
+                                <TextBlock Text="Relationship to Deceased" Style="{DynamicResource FieldLabel}" />
+                                <TextBox x:Name="TxtDepositorRelationship" Style="{StaticResource AdmInput}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="4">
+                                <TextBlock Text="Phone Number" Style="{DynamicResource FieldLabel}" />
+                                <TextBox x:Name="TxtDepositorPhone" Style="{StaticResource AdmInput}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+                                <TextBlock Text="Address" Style="{DynamicResource FieldLabel}" />
+                                <TextBox x:Name="TxtDepositorAddress" Style="{StaticResource AdmInput}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushTheme}" BorderThickness="1" Margin="0,0,0,16" Padding="0">
+                    <StackPanel>
+                        <Border Background="#F8FAFC" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BorderBrushTheme}" Padding="20,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Width="3" Height="18" Background="#F59E0B" Margin="0,0,12,0"/>
+                                <TextBlock Grid.Column="1" Text="STORAGE &amp; BILLING" FontSize="13" FontWeight="SemiBold" Foreground="#0F172A" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <Grid Margin="20,16,20,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" /><ColumnDefinition Width="16" />
+                                <ColumnDefinition Width="*" /><ColumnDefinition Width="16" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="14" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="14" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="Storage Location" Style="{DynamicResource FieldLabel}" />
+                                <ComboBox x:Name="CboStorage" Style="{StaticResource AdmCombo}" DisplayMemberPath="DisplayName" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2">
+                                <TextBlock Text="Billing Type" Style="{DynamicResource FieldLabel}" />
+                                <ComboBox x:Name="CboBillingType" Style="{StaticResource AdmCombo}">
+                                    <ComboBoxItem Content="daily" />
+                                    <ComboBoxItem Content="weekly" />
+                                    <ComboBoxItem Content="monthly" />
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="4">
+                                <TextBlock Text="Billing Rate (₵)" Style="{DynamicResource FieldLabel}" />
+                                <TextBox x:Name="TxtBillingRate" Text="120.00" Style="{StaticResource AdmInput}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="0">
+                                <TextBlock Text="Amount to be Paid (₵)" Style="{DynamicResource FieldLabel}" />
+                                <TextBox x:Name="TxtAmountToBePaid" Text="500.00" Style="{StaticResource AdmInput}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="2">
+                                <TextBlock Text="Deposit (₵)" Style="{DynamicResource FieldLabel}" />
+                                <TextBox x:Name="TxtDeposit" Text="0" Style="{StaticResource AdmInput}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="4">
+                                <TextBlock Text="Billing Start Date" Style="{DynamicResource FieldLabel}" />
+                                <DatePicker x:Name="DpBillingStart" Style="{StaticResource AdmDate}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="4" Grid.Column="2">
+                                <TextBlock Text="Start Time" Style="{DynamicResource FieldLabel}" />
+                                <ComboBox x:Name="CboBillingStartTime" Style="{StaticResource AdmCombo}" IsEditable="True" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushTheme}" BorderThickness="1" Margin="0,0,0,16" Padding="20">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Width="3" Height="18" Background="#F59E0B" Margin="0,0,12,0"/>
+                            <TextBlock Grid.Column="1" Text="ADMISSION NOTES" FontSize="13" FontWeight="SemiBold" Foreground="#0F172A" VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBox x:Name="TxtNotes" TextWrapping="Wrap" AcceptsReturn="True" Height="80" Style="{StaticResource AdmInput}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushTheme}" BorderThickness="1" Padding="0">
+                    <StackPanel>
+                        <Grid Margin="20,16,20,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock Text="Admission Records" Style="{StaticResource ModernSectionTitle}" />
+                                <TextBlock Text="All body admissions in the system" Style="{StaticResource ModernMutedText}" Margin="0,2,0,0" />
+                            </StackPanel>
+                        </Grid>
+                        <Border Height="1" Background="{DynamicResource BorderBrushTheme}" />
+                        <DataGrid x:Name="DgBodies" IsReadOnly="True" AutoGenerateColumns="False" Style="{DynamicResource ModernDataGrid}" MaxHeight="360" BorderThickness="0" MouseDoubleClick="DgBodies_MouseDoubleClick">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Mortuary #" Binding="{Binding MortuaryNumber}" Width="100" />
+                                <DataGridTextColumn Header="Name" Binding="{Binding DeceasedName}" Width="*" MinWidth="100" />
+                                <DataGridTextColumn Header="Gender" Binding="{Binding Gender}" Width="60" />
+                                <DataGridTextColumn Header="Date of Death" Binding="{Binding DateOfDeath, StringFormat={}{0:yyyy-MM-dd}}" Width="100" />
+                                <DataGridTextColumn Header="Depositor" Binding="{Binding DepositorName}" Width="120" />
+                                <DataGridTextColumn Header="Phone" Binding="{Binding DepositorPhone}" Width="110" />
+                                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="70" />
+                                <DataGridTextColumn Header="Admitted" Binding="{Binding CreatedAt, StringFormat={}{0:yyyy-MM-dd HH:mm}}" Width="130" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+        <Border Grid.Row="1" Background="{DynamicResource CardBgBrush}" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource BorderBrushTheme}" Padding="24,14">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" x:Name="TxtPageInfo" Text="All fields marked with * are required" Style="{StaticResource ModernMutedText}" VerticalAlignment="Center" />
+                <Button Grid.Column="1" x:Name="BtnCancel" Height="40" MinWidth="100" Style="{DynamicResource SecondaryBtn}" Click="BtnCancel_Click">
+                    <TextBlock Text="Cancel / Clear" FontSize="13" FontWeight="SemiBold"/>
+                </Button>
+                <Button Grid.Column="3" x:Name="BtnAdmit" Height="40" MinWidth="130" Style="{DynamicResource PrimaryBtn}" Click="BtnAdmit_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Admit Body" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

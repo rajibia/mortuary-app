@@ -1,0 +1,341 @@
+﻿<Window x:Class="MortuaryApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Mortuary Management System" Height="820" Width="1250"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent"
+        TextOptions.TextFormattingMode="Display"
+        FontFamily="Segoe UI">
+    <Window.Resources>
+        <Style x:Key="SidebarBtn" TargetType="Button">
+            <Setter Property="Foreground" Value="#8B95A5"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,0,16,0"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}" Margin="0,0,0,0">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1E293B"/>
+                    <Setter Property="Foreground" Value="#E2E8F0"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                    <Setter Property="Background" Value="#1E293B"/>
+                    <Setter Property="BorderBrush" Value="#F59E0B"/>
+                    <Setter Property="BorderThickness" Value="3,0,0,0"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="SidebarSection" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="9"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#475569"/>
+            <Setter Property="Margin" Value="20,20,0,6"/>
+            <Setter Property="Padding" Value="0,0,0,0"/>
+        </Style>
+        <Style x:Key="UserAvatarChip" TargetType="Border">
+            <Setter Property="Background" Value="#F8FAFC"/>
+            <Setter Property="Padding" Value="8,4"/>
+        </Style>
+    </Window.Resources>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="6" GlassFrameThickness="0"/>
+    </WindowChrome.WindowChrome>
+
+    <Border Background="{DynamicResource ContentBgBrush}">
+        <Grid>
+            <!-- Main Content Area -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- ===== SIDEBAR ===== -->
+                <Border Grid.Column="0" Background="#0F172A">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="68"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Brand -->
+                    <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#1E293B" Padding="20,0" Height="68">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image x:Name="ImgSidebarLogo" Width="36" Height="36" Stretch="Uniform" Visibility="Collapsed" Margin="0,0,12,0"/>
+                            <Border x:Name="SidebarIconBox" Width="36" Height="36" Background="#F59E0B" Margin="0,0,12,0">
+                                <TextBlock Text="&#xE15D;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="#FFFFFF"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock x:Name="TxtBrandName" Text="Msoft Mortuary Pro" Foreground="#FFFFFF" FontSize="15" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Nav -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" Margin="0,8,0,0">
+                        <StackPanel x:Name="NavPanel">
+                            <TextBlock Text="OVERVIEW" Style="{StaticResource SidebarSection}"/>
+                            <Button x:Name="NavDashboard" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Dashboard" IsEnabled="False">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE10F;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Dashboard" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <TextBlock Text="MORTUARY OPERATIONS" Style="{StaticResource SidebarSection}"/>
+                            <Button x:Name="NavAdmission" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Admission">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE998;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Admission" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavBodyLocator" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="BodyLocator">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE721;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Body Locator" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavColdRoom" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="ColdRoom">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE619;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Cold Room" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavEmbalming" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Embalming">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xEA96;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Embalming" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavRelease" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Release">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE7B1;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Release" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavViewings" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Viewings">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xEBCB;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Viewings" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavCremations" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Cremations">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE3FD;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Cremations" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <TextBlock Text="FINANCE" Style="{StaticResource SidebarSection}"/>
+                            <Button x:Name="NavBilling" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Billing">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE94A;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Billing" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavIncomes" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Incomes">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xECE7;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Incomes" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavExpenses" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Expenses">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xECE8;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Expenses" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavRevenue" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Revenue">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xED9C;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Revenue" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <TextBlock Text="RECORDS" Style="{StaticResource SidebarSection}"/>
+                            <Button x:Name="NavContacts" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Contacts">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE76D;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Contacts" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavCertificates" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Certificates">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE164;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Certificates" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavTemperature" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Temperature">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE619;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Temperature" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavInventory" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Inventory">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE7F8;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Inventory" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <TextBlock Text="REPORTS &amp; ADMIN" Style="{StaticResource SidebarSection}"/>
+                            <Button x:Name="NavReports" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Reports">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE77F;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Reports" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavAudit" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="Audit">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE2F1;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Audit Trail" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="NavHumanResource" Style="{StaticResource SidebarBtn}" Click="Nav_Click" Tag="HumanResource">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE716;" FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Human Resource" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </ScrollViewer>
+
+
+                </Grid>
+            </Border>
+
+            <!-- ===== CONTENT AREA ===== -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="56"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Top Bar -->
+                <Border Grid.Row="0" Background="#0F172A" BorderThickness="0,0,0,1" BorderBrush="#1E293B" Padding="0">
+                    <Grid Margin="24,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="110"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Page Title + Subtitle -->
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock x:Name="PageTitle" Text="Dashboard" FontSize="18" FontWeight="SemiBold" Foreground="#FFFFFF"/>
+                            <TextBlock x:Name="PageSubtitle" Text="Overview of mortuary operations" FontSize="11" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        </StackPanel>
+
+                        <!-- Search -->
+                        <Border Grid.Column="1" Background="#1E293B" Width="200" Height="34" Margin="0,0,16,0">
+                            <Grid>
+                                <TextBox x:Name="TxtGlobalSearch" Background="Transparent" BorderThickness="0"
+                                         FontSize="12" Foreground="#E2E8F0" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                <StackPanel Orientation="Horizontal" IsHitTestVisible="False" VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=TxtGlobalSearch}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+                                    <materialDesign:PackIcon Kind="Magnify" Width="12" Height="12" Foreground="#64748B" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Search bodies..." FontSize="12" Foreground="#64748B" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Backup -->
+                        <Button Grid.Column="2" Style="{StaticResource IconBtn}" Margin="0,0,10,0" Click="BtnBackup_Click"
+                                ToolTip="Backup Database">
+                            <materialDesign:PackIcon Kind="DatabaseOutline" Width="14" Height="14" Foreground="#94A3B8"/>
+                        </Button>
+
+                        <!-- Settings -->
+<Button x:Name="NavSettingsBtn" Grid.Column="3" Style="{StaticResource IconBtn}" Margin="0,0,10,0" Click="NavSettings_Click"
+                                                                ToolTip="Settings">
+                            <materialDesign:PackIcon Kind="CogOutline" Width="14" Height="14" Foreground="#94A3B8"/>
+                        </Button>
+
+                        <!-- Theme Toggle -->
+                        <Button Grid.Column="4" Style="{StaticResource IconBtn}" Margin="0,0,10,0" Click="BtnToggleTheme_Click">
+                            <materialDesign:PackIcon x:Name="ThemeIcon" Kind="WeatherSunny" Width="14" Height="14" Foreground="#94A3B8"/>
+                        </Button>
+
+                        <!-- Notifications -->
+                        <Button Grid.Column="5" Style="{StaticResource IconBtn}" Margin="0,0,10,0">
+                            <materialDesign:PackIcon Kind="BellOutline" Width="16" Height="16" Foreground="#94A3B8"/>
+                        </Button>
+
+                        <!-- Clock -->
+                        <TextBlock Grid.Column="6" x:Name="ClockText" Text="Loading..." FontSize="12" Foreground="#64748B" VerticalAlignment="Center" Margin="0,0,16,0"/>
+
+                        <!-- User Avatar Chip -->
+                        <Border Grid.Column="7" Padding="8,5" Background="#1E293B" Cursor="Hand" Margin="0">
+                            <StackPanel Orientation="Horizontal" MouseLeftButtonDown="UserInfo_MouseLeftButtonDown">
+                                <Border Width="28" Height="28" Background="#F59E0B" Margin="0,0,10,0">
+                                    <TextBlock x:Name="TxtUserAvatar" Text="SA" FontSize="11" FontWeight="SemiBold" Foreground="#FFFFFF"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock x:Name="TxtUserName" FontSize="12" FontWeight="SemiBold" Foreground="#FFFFFF"/>
+                                    <TextBlock x:Name="TxtUserRole" FontSize="10" Foreground="#94A3B8" Margin="0,0,4,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Page Content -->
+                <Frame Grid.Row="1" x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+            </Grid> <!-- closes content area Grid -->
+        </Grid> <!-- closes main content Grid -->
+
+        <!-- Toast Notifications Container -->
+        <StackPanel x:Name="ToastContainer" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,16,16" Width="380"/>
+
+        <!-- Window Controls - overlaid at top-right of window chrome -->
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,6,6,0">
+            <Button x:Name="BtnMinimize" Width="32" Height="32" Style="{StaticResource CaptionBtn}" Click="BtnMinimize_Click">
+                <materialDesign:PackIcon Kind="WindowMinimize" Width="12" Height="12" Foreground="#64748B"/>
+            </Button>
+            <Button x:Name="BtnMaximize" Width="32" Height="32" Style="{StaticResource CaptionBtn}" Click="BtnMaximize_Click">
+                <materialDesign:PackIcon x:Name="MaximizeIcon" Kind="WindowMaximize" Width="12" Height="12" Foreground="#64748B"/>
+            </Button>
+            <Button x:Name="BtnClose" Width="32" Height="32" Style="{StaticResource CaptionBtn}" Click="BtnClose_Click">
+                <materialDesign:PackIcon Kind="WindowClose" Width="12" Height="12" Foreground="#64748B"/>
+            </Button>
+        </StackPanel>
+        </Grid>
+    </Border>
+</Window>

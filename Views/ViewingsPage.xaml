@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="MortuaryApp.Views.ViewingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MortuaryApp.Controls"
+             Background="{DynamicResource ContentBgBrush}">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Style="{DynamicResource Card}" Margin="0,0,0,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Body:" VerticalAlignment="Center" />
+                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="CboBody" Style="{DynamicResource ModernComboBox}" DisplayMemberPath="DeceasedName" />
+                <TextBlock Grid.Row="0" Grid.Column="3" Text="Requested By:" VerticalAlignment="Center" />
+                <TextBox Grid.Row="0" Grid.Column="4" x:Name="TxtRequestedBy" Style="{DynamicResource ModernTextBox}" />
+                <TextBlock Grid.Row="0" Grid.Column="6" Text="Phone:" VerticalAlignment="Center" />
+                <controls:PhoneInput x:Name="TxtPhone" Grid.Row="0" Grid.Column="7" Height="34"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Relationship:" VerticalAlignment="Center" />
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="TxtRelationship" Style="{DynamicResource ModernTextBox}" Grid.ColumnSpan="3" />
+                <Button Grid.Row="2" Grid.Column="8" x:Name="BtnSchedule" MinWidth="100" Margin="10,0,0,0" Style="{DynamicResource PrimaryBtn}" Click="BtnSchedule_Click">
+                    <TextBlock Text="Schedule" VerticalAlignment="Center" />
+                </Button>
+            </Grid>
+        </Border>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,8">
+            <Button x:Name="BtnComplete" MinWidth="100" Height="34" Style="{DynamicResource PrimaryBtn}" Margin="0,0,10,0" Click="BtnComplete_Click">
+                <TextBlock Text="Complete" />
+            </Button>
+            <Button x:Name="BtnCancel" MinWidth="100" Height="34" Style="{DynamicResource SecondaryBtn}" Click="BtnCancel_Click">
+                <TextBlock Text="Cancel" />
+            </Button>
+        </StackPanel>
+        <DataGrid Grid.Row="2" x:Name="DgViewings" IsReadOnly="True" AutoGenerateColumns="False" Style="{DynamicResource ModernDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Body" Binding="{Binding Body.DeceasedName}" Width="120" />
+                <DataGridTextColumn Header="Requested By" Binding="{Binding RequestedBy}" Width="*" />
+                <DataGridTextColumn Header="Phone" Binding="{Binding ContactPhone}" Width="120" />
+                <DataGridTextColumn Header="Relationship" Binding="{Binding Relationship}" Width="100" />
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="70" />
+                <DataGridTextColumn Header="Scheduled At" Binding="{Binding ScheduledAt, StringFormat={}{0:yyyy-MM-dd HH:mm}}" Width="130" />
+                <DataGridTextColumn Header="Ended At" Binding="{Binding EndedAt, StringFormat={}{0:yyyy-MM-dd HH:mm}}" Width="130" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

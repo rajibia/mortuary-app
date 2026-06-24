@@ -1,0 +1,295 @@
+﻿<UserControl x:Class="MortuaryApp.Views.SettingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MortuaryApp.Controls"
+             Background="{DynamicResource ContentBgBrush}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="15">
+            <TextBlock Text="Settings" Style="{StaticResource ModernPageTitle}"/>
+            <TextBlock Text="Manage system configuration and preferences" Style="{StaticResource ModernBodyText}" Margin="0,2,0,20"/>
+            <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushTheme}" BorderThickness="1" Margin="0,0,0,15" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Public Holidays" Style="{StaticResource ModernSectionTitle}" Margin="0,0,0,4"/>
+                    <TextBlock Text="Dates when late fee charges are waived" Style="{StaticResource ModernCaptionText}" Margin="0,0,0,14"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <DatePicker Grid.Column="0" Name="DpHoliday" Width="130" Height="36" Margin="0,0,10,0"/>
+                        <TextBox Grid.Column="1" Name="TxtHolidayName" Height="36" Margin="0,0,10,0"/>
+                        <Button Grid.Column="2" Name="BtnAddHoliday" MinWidth="100" Height="36"
+                                Background="#F59E0B" Foreground="#FFFFFF" BorderThickness="0" Cursor="Hand"
+                                FontSize="13" FontWeight="SemiBold" Padding="14,0" Click="BtnAddHoliday_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Add" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <DataGrid Name="DgHolidays" IsReadOnly="True" AutoGenerateColumns="False" Height="140" Margin="0,12,0,0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:yyyy-MM-dd}}" Width="120"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                            <DataGridCheckBoxColumn Header="Fee Exempt" Binding="{Binding IsFeeExempt}" Width="80"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+            <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushTheme}" BorderThickness="1" Margin="0,0,0,15" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="ID Number Settings" Style="{StaticResource ModernSectionTitle}" Margin="0,0,0,4"/>
+                    <TextBlock Text="Configure auto-generated mortuary case number format" Style="{StaticResource ModernCaptionText}" Margin="0,0,0,14"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Prefix" Style="{StaticResource ModernFormLabel}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBox Grid.Column="1" Name="TxtPrefix" Text="MOR" Height="36"/>
+                        <TextBlock Grid.Column="2" Text="Digits" Style="{StaticResource ModernFormLabel}" VerticalAlignment="Center" Margin="12,0,8,0"/>
+                        <TextBox Grid.Column="3" Name="TxtDigits" Text="4" Height="36"/>
+                        <Button Grid.Column="4" Name="BtnSaveId" MinWidth="80" Height="36" Margin="10,0,0,0"
+                                Background="#F59E0B" Foreground="#FFFFFF" BorderThickness="0" Cursor="Hand"
+                                FontSize="13" FontWeight="SemiBold" Padding="14,0" Click="BtnSaveId_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Save" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushTheme}" BorderThickness="1" Margin="0,0,0,15" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Organization Information" Style="{StaticResource ModernSectionTitle}" Margin="0,0,0,4"/>
+                    <TextBlock Text="Your organization details appear on printed reports and receipts" Style="{StaticResource ModernCaptionText}" Margin="0,0,0,14"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,8,10">
+                            <TextBlock Text="Organization Name" Style="{StaticResource ModernFormLabel}" Margin="0,0,0,4"/>
+                            <TextBox Name="TxtOrgName" Height="36"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="8,0,0,10">
+                            <TextBlock Text="Phone" Style="{StaticResource ModernFormLabel}" Margin="0,0,0,4"/>
+                            <controls:PhoneInput x:Name="TxtOrgPhone" Height="36"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,8,10">
+                            <TextBlock Text="Email" Style="{StaticResource ModernFormLabel}" Margin="0,0,0,4"/>
+                            <TextBox Name="TxtOrgEmail" Height="36"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="8,0,0,10">
+                            <TextBlock Text="Address" Style="{StaticResource ModernFormLabel}" Margin="0,0,0,4"/>
+                            <TextBox Name="TxtOrgAddress" Height="36"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,10">
+                            <TextBlock Text="App Name (brand)" Style="{StaticResource ModernFormLabel}" Margin="0,0,0,4"/>
+                            <TextBox Name="TxtAppName" Height="36"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,10">
+                            <TextBlock Text="Organization Logo" Style="{StaticResource ModernFormLabel}" Margin="0,0,0,4"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0" Name="TxtOrgLogoPath" Height="36" IsReadOnly="True" Margin="0,0,8,0"/>
+                                <Button Grid.Column="1" Name="BtnBrowseLogo" Height="36" MinWidth="80"
+                                        Background="#FFFFFF" Foreground="#374151" BorderBrush="#D1D5DB" BorderThickness="1"
+                                        Cursor="Hand" FontSize="13" Padding="12,0" Click="BtnBrowseLogo_Click">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Browse..." VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Margin="0,4,0,0">
+                            <Button Name="BtnSaveOrg" MinWidth="130" Height="36"
+                                    Background="#F59E0B" Foreground="#FFFFFF" BorderThickness="0" Cursor="Hand"
+                                    FontSize="13" FontWeight="SemiBold" Padding="14,0" Click="BtnSaveOrg_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Save Organization" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushTheme}" BorderThickness="1" Margin="0,0,0,15" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Email / SMTP Settings" Style="{StaticResource ModernSectionTitle}" Margin="0,0,0,4"/>
+                    <TextBlock Text="Used for sending password reset emails and notifications" Style="{StaticResource ModernCaptionText}" Margin="0,0,0,14"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,8,10">
+                            <TextBlock Text="SMTP Host" Style="{StaticResource ModernFormLabel}" Margin="0,0,0,4"/>
+                            <TextBox Name="TxtSmtpHost" Height="36"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="8,0,0,10">
+                            <TextBlock Text="SMTP Port" Style="{StaticResource ModernFormLabel}" Margin="0,0,0,4"/>
+                            <TextBox Name="TxtSmtpPort" Height="36" Text="587"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,8,10">
+                            <TextBlock Text="SMTP Username" Style="{StaticResource ModernFormLabel}" Margin="0,0,0,4"/>
+                            <TextBox Name="TxtSmtpUsername" Height="36"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="8,0,0,10">
+                            <TextBlock Text="SMTP Password" Style="{StaticResource ModernFormLabel}" Margin="0,0,0,4"/>
+                            <PasswordBox Name="TxtSmtpPassword" Height="36"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,10">
+                            <TextBlock Text="From Email" Style="{StaticResource ModernFormLabel}" Margin="0,0,0,4"/>
+                            <TextBox Name="TxtSmtpFrom" Height="36"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Margin="0,4,0,0">
+                            <Button Name="BtnSaveSmtp" MinWidth="130" Height="36"
+                                    Background="#F59E0B" Foreground="#FFFFFF" BorderThickness="0" Cursor="Hand"
+                                    FontSize="13" FontWeight="SemiBold" Padding="14,0" Click="BtnSaveSmtp_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Save SMTP Settings" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <Border x:Name="RevenuePctCard" Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushTheme}" BorderThickness="1" Margin="0,0,0,15" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Filter by Percentage" Style="{StaticResource ModernSectionTitle}" Margin="0,0,0,14"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="14"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="0" Name="CboRevenuePct" Width="120" Height="36"
+                                  Style="{DynamicResource ModernComboBox}" SelectedValuePath="Content">
+                            <ComboBoxItem Content="25" />
+                            <ComboBoxItem Content="50" />
+                            <ComboBoxItem Content="75" />
+                            <ComboBoxItem Content="100" />
+                        </ComboBox>
+                        <Button Grid.Column="2" Name="BtnSaveRevenuePct" MinWidth="100" Height="36"
+                                Background="#F59E0B" Foreground="#FFFFFF" BorderThickness="0" Cursor="Hand"
+                                FontSize="13" FontWeight="SemiBold" Padding="14,0" Click="BtnSaveRevenuePct_Click">
+                            <TextBlock Text="Save" VerticalAlignment="Center"/>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushTheme}" BorderThickness="1" Margin="0,0,0,15" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Application Updates" Style="{StaticResource ModernSectionTitle}" Margin="0,0,0,4"/>
+                    <TextBlock Text="Check for new versions" Style="{StaticResource ModernCaptionText}" Margin="0,0,0,14"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Name="TxtUpdateStatus" Text="v1.0.0 — up to date"
+                                   VerticalAlignment="Center" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                        <Button Grid.Column="2" Name="BtnCheckUpdate" MinWidth="140" Height="36"
+                                Background="#F59E0B" Foreground="#FFFFFF" BorderThickness="0" Cursor="Hand"
+                                FontSize="13" FontWeight="SemiBold" Padding="14,0" Click="BtnCheckUpdate_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Check for Updates" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushTheme}" BorderThickness="1" Margin="0,0,0,15" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Roles &amp; Permissions" Style="{StaticResource ModernSectionTitle}" Margin="0,0,0,4"/>
+                    <TextBlock Text="Manage role-based access to pages and actions" Style="{StaticResource ModernCaptionText}" Margin="0,0,0,14"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,15,0">
+                            <DataGrid Name="DgRoles" IsReadOnly="True" AutoGenerateColumns="False" Height="200"
+                                      SelectionChanged="DgRoles_SelectionChanged" HeadersVisibility="None">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Name}" Width="*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button Name="BtnAddRole" MinWidth="90" Height="34" Margin="0,8,0,0"
+                                    Background="#F59E0B" Foreground="#FFFFFF" BorderThickness="0" Cursor="Hand"
+                                    FontSize="12" FontWeight="SemiBold" Padding="10,0" Click="BtnAddRole_Click">
+                                <TextBlock Text="+ New Role" VerticalAlignment="Center"/>
+                            </Button>
+                        </StackPanel>
+                        <Border Grid.Column="1" BorderThickness="1" BorderBrush="#E2E8F0" Padding="15" VerticalAlignment="Top">
+                            <StackPanel x:Name="PermPanel" IsEnabled="False">
+                                <StackPanel.Resources>
+                                    <Style TargetType="CheckBox">
+                                        <Setter Property="Margin" Value="0,3,0,3"/>
+                                        <Setter Property="FontSize" Value="12"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <TextBlock x:Name="TxtRoleName" FontSize="14" FontWeight="SemiBold" Foreground="#0F172A" Margin="0,0,0,10"/>
+                                <TextBlock Text="Page Access" FontSize="11" FontWeight="Bold" Foreground="#64748B" Margin="0,0,0,4"/>
+                                <CheckBox x:Name="ChkDashboard" Content="Dashboard" Tag="pages.dashboard"/>
+                                <CheckBox x:Name="ChkAdmission" Content="Admission" Tag="pages.admission"/>
+                                <CheckBox x:Name="ChkBodies" Content="Body Locator" Tag="pages.bodies"/>
+                                <CheckBox x:Name="ChkColdRoom" Content="Cold Room" Tag="pages.coldroom"/>
+                                <CheckBox x:Name="ChkEmbalming" Content="Embalming" Tag="pages.embalming"/>
+                                <CheckBox x:Name="ChkRelease" Content="Release" Tag="pages.release"/>
+                                <CheckBox x:Name="ChkViewings" Content="Viewings" Tag="pages.viewings"/>
+                                <CheckBox x:Name="ChkCremations" Content="Cremations" Tag="pages.cremations"/>
+                                <CheckBox x:Name="ChkBilling" Content="Billing" Tag="pages.billing"/>
+                                <CheckBox x:Name="ChkIncomes" Content="Incomes" Tag="pages.incomes"/>
+                                <CheckBox x:Name="ChkExpenses" Content="Expenses" Tag="pages.expenses"/>
+                                <CheckBox x:Name="ChkRevenue" Content="Revenue" Tag="pages.revenue"/>
+                                <CheckBox x:Name="ChkContacts" Content="Contacts" Tag="pages.contacts"/>
+                                <CheckBox x:Name="ChkCertificates" Content="Certificates" Tag="pages.certificates"/>
+                                <CheckBox x:Name="ChkTemperature" Content="Temperature" Tag="pages.temperature"/>
+                                <CheckBox x:Name="ChkInventory" Content="Inventory" Tag="pages.inventory"/>
+                                <CheckBox x:Name="ChkReports" Content="Reports" Tag="pages.reports"/>
+                                <CheckBox x:Name="ChkAudit" Content="Audit Log" Tag="pages.audit"/>
+                                <CheckBox x:Name="ChkSettings" Content="Settings" Tag="pages.settings"/>
+                                <CheckBox x:Name="ChkHr" Content="Human Resources" Tag="pages.hr"/>
+                                <TextBlock Text="Actions" FontSize="11" FontWeight="Bold" Foreground="#64748B" Margin="0,10,0,4"/>
+                                <CheckBox x:Name="ChkPay" Content="Can Make Payments" Tag="actions.billing.pay"/>
+                                <CheckBox x:Name="ChkReleaseApprove" Content="Can Approve Releases" Tag="actions.release.approve"/>
+                                <CheckBox x:Name="ChkEditSettings" Content="Can Edit Settings" Tag="actions.settings.edit"/>
+                                <CheckBox x:Name="ChkManageUsers" Content="Can Manage Users" Tag="actions.users.manage"/>
+                                <CheckBox x:Name="ChkDeleteBodies" Content="Can Delete Body Records" Tag="actions.bodies.delete"/>
+                                <CheckBox x:Name="ChkExport" Content="Can Export Reports" Tag="actions.reports.export"/>
+                                <Button x:Name="BtnSavePerms" MinWidth="100" Height="34" Margin="0,14,0,0" HorizontalAlignment="Right"
+                                        Background="#F59E0B" Foreground="#FFFFFF" BorderThickness="0" Cursor="Hand"
+                                        FontSize="13" FontWeight="SemiBold" Padding="14,0" Click="BtnSavePerms_Click"
+                                        IsDefault="True">
+                                    <TextBlock Text="Save Permissions" VerticalAlignment="Center"/>
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

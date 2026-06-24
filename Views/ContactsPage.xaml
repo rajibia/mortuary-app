@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="MortuaryApp.Views.ContactsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MortuaryApp.Controls"
+             Background="{DynamicResource ContentBgBrush}">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Style="{DynamicResource Card}" Margin="0,0,0,15">
+            <StackPanel>
+                <TextBlock Text="Contact Information" Style="{DynamicResource SectionHeader}" Margin="0,0,0,10" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="14" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <TextBlock Text="Full Name" Style="{StaticResource ModernFormLabel}" />
+                        <TextBox x:Name="TxtName" Height="34" Margin="0,4,0,0" Style="{DynamicResource ModernTextBox}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="2">
+                        <TextBlock Text="Relationship" Style="{StaticResource ModernFormLabel}" />
+                        <TextBox x:Name="TxtRelationship" Height="34" Margin="0,4,0,0" Style="{DynamicResource ModernTextBox}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="0">
+                        <TextBlock Text="Phone" Style="{StaticResource ModernFormLabel}" />
+                        <controls:PhoneInput x:Name="TxtPhone" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="2">
+                        <TextBlock Text="Email" Style="{StaticResource ModernFormLabel}" />
+                        <TextBox x:Name="TxtEmail" Height="34" Margin="0,4,0,0" Style="{DynamicResource ModernTextBox}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="4" Grid.Column="0">
+                        <TextBlock Text="Address" Style="{StaticResource ModernFormLabel}" />
+                        <TextBox x:Name="TxtAddress" Height="34" Margin="0,4,0,0" Style="{DynamicResource ModernTextBox}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="4" Grid.Column="2">
+                        <TextBlock Text="National ID" Style="{StaticResource ModernFormLabel}" />
+                        <TextBox x:Name="TxtNationalId" Height="34" Margin="0,4,0,0" Style="{DynamicResource ModernTextBox}" />
+                    </StackPanel>
+                </Grid>
+                <StackPanel Orientation="Horizontal" Margin="0,14,0,0" HorizontalAlignment="Right">
+                    <Button x:Name="BtnAdd" MinWidth="90" Height="34" Style="{DynamicResource PrimaryBtn}" Margin="0,0,10,0" Click="BtnAdd_Click">
+                        <TextBlock Text="+ Add" VerticalAlignment="Center" />
+                    </Button>
+                    <Button x:Name="BtnEdit" MinWidth="90" Height="34" Style="{DynamicResource SecondaryBtn}" Margin="0,0,10,0" Click="BtnEdit_Click">
+                        <TextBlock Text="Edit" />
+                    </Button>
+                    <Button x:Name="BtnDelete" MinWidth="90" Height="34" Style="{DynamicResource SecondaryBtn}" Click="BtnDelete_Click">
+                        <TextBlock Text="Delete" />
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <DataGrid Grid.Row="1" x:Name="DgContacts" IsReadOnly="True" AutoGenerateColumns="False" Style="{DynamicResource ModernDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+                <DataGridTextColumn Header="Relationship" Binding="{Binding Relationship}" Width="100" />
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="130" />
+                <DataGridTextColumn Header="Email / Address" Binding="{Binding Email}" Width="160" />
+                <DataGridTextColumn Header="Source" Binding="{Binding Source}" Width="80" />
+                <DataGridTextColumn Header="Body Ref" Binding="{Binding BodyRef}" Width="100" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

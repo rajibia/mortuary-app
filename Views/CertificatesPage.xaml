@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="MortuaryApp.Views.CertificatesPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Background="{DynamicResource ContentBgBrush}">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Style="{DynamicResource Card}" Margin="0,0,0,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="12" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Body:" Style="{StaticResource ModernFormLabel}" VerticalAlignment="Center" />
+                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="CboBody" Style="{DynamicResource ModernComboBox}" DisplayMemberPath="DeceasedName" />
+                <TextBlock Grid.Row="0" Grid.Column="3" Text="Issued To:" Style="{StaticResource ModernFormLabel}" VerticalAlignment="Center" />
+                <TextBox Grid.Row="0" Grid.Column="4" x:Name="TxtIssuedTo" Style="{DynamicResource ModernTextBox}" />
+                <TextBlock Grid.Row="0" Grid.Column="6" Text="ID Type:" Style="{StaticResource ModernFormLabel}" VerticalAlignment="Center" />
+                <TextBox Grid.Row="0" Grid.Column="7" x:Name="TxtIdType" Style="{DynamicResource ModernTextBox}" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="ID Number:" Style="{StaticResource ModernFormLabel}" VerticalAlignment="Center" />
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="TxtIdNumber" Style="{DynamicResource ModernTextBox}" Grid.ColumnSpan="3" />
+                <Button Grid.Row="2" Grid.Column="8" x:Name="BtnIssue" MinWidth="110" Style="{DynamicResource PrimaryBtn}" Click="BtnIssue_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Certificate" Style="{DynamicResource BtnIcon}" />
+                        <TextBlock Text="Issue" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+        <TextBlock Grid.Row="1" Text="Certificate Records" Style="{DynamicResource SectionHeader}" Margin="0,0,0,6" />
+        <DataGrid Grid.Row="2" x:Name="DgCertificates" IsReadOnly="True" AutoGenerateColumns="False" Style="{DynamicResource ModernDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Body" Binding="{Binding Body.DeceasedName}" Width="120" />
+                <DataGridTextColumn Header="Certificate #" Binding="{Binding CertificateNumber}" Width="120" />
+                <DataGridTextColumn Header="Issued To" Binding="{Binding IssuedTo}" Width="*" />
+                <DataGridTextColumn Header="ID Type" Binding="{Binding IdType}" Width="80" />
+                <DataGridTextColumn Header="ID Number" Binding="{Binding IdNumber}" Width="100" />
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="70" />
+                <DataGridTextColumn Header="Issued At" Binding="{Binding IssuedAt, StringFormat={}{0:yyyy-MM-dd HH:mm}}" Width="130" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

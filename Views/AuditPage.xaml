@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="MortuaryApp.Views.AuditPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{DynamicResource ContentBgBrush}">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Style="{DynamicResource Card}" Margin="0,0,0,15">
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="TxtFilterModule" Width="150" Margin="0,0,10,0" Style="{DynamicResource ModernTextBox}" />
+                <Button x:Name="BtnFilter" Margin="0,0,10,0" Click="BtnFilter_Click" Style="{DynamicResource PrimaryBtn}">
+                    <TextBlock Text="Filter by Module" VerticalAlignment="Center" />
+                </Button>
+                <Button x:Name="BtnClear" Click="BtnClear_Click" Style="{DynamicResource SecondaryBtn}">
+                    <TextBlock Text="Clear" VerticalAlignment="Center" />
+                </Button>
+            </StackPanel>
+        </Border>
+        <DataGrid Grid.Row="1" x:Name="DgAudit" IsReadOnly="True" AutoGenerateColumns="False" Style="{DynamicResource ModernDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding CreatedAt, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" Width="140" />
+                <DataGridTextColumn Header="Module" Binding="{Binding Module}" Width="100" />
+                <DataGridTextColumn Header="Activity" Binding="{Binding Activity}" Width="120" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                <DataGridTextColumn Header="User" Binding="{Binding User}" Width="70" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

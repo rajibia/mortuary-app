@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="MortuaryApp.Views.ColdRoomPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{DynamicResource ContentBgBrush}">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Style="{DynamicResource Card}" Margin="0,0,0,15">
+            <StackPanel>
+                <TextBlock Text="Storage Locations" Style="{DynamicResource SectionHeader}" Margin="0,0,0,10" />
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="0,0,10,0">
+                        <TextBlock Text="Room" Style="{StaticResource ModernFormLabel}" />
+                        <TextBox x:Name="TxtRoom" Width="120" Height="32" Margin="0,4,0,0" Style="{DynamicResource ModernTextBox}" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,10,0">
+                        <TextBlock Text="Chamber" Style="{StaticResource ModernFormLabel}" />
+                        <TextBox x:Name="TxtChamber" Width="120" Height="32" Margin="0,4,0,0" Style="{DynamicResource ModernTextBox}" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,10,0">
+                        <TextBlock Text="Bed" Style="{StaticResource ModernFormLabel}" />
+                        <TextBox x:Name="TxtBed" Width="120" Height="32" Margin="0,4,0,0" Style="{DynamicResource ModernTextBox}" />
+                    </StackPanel>
+                    <Button x:Name="BtnAddLocation" Height="32" Margin="0,22,0,0" Style="{DynamicResource PrimaryBtn}" Click="BtnAddLocation_Click">
+                        <TextBlock Text="+ Add Location" VerticalAlignment="Center" />
+                    </Button>
+                    <Button x:Name="BtnRefresh" Height="32" Margin="10,22,0,0" Style="{DynamicResource SecondaryBtn}" Click="BtnRefresh_Click">
+                        <TextBlock Text="Refresh" VerticalAlignment="Center" />
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
+                <Button x:Name="BtnEditStatus" MinWidth="100" Height="34" Style="{DynamicResource SecondaryBtn}" Margin="0,0,10,0" Click="BtnEditStatus_Click">
+                    <TextBlock Text="Edit Status" />
+                </Button>
+                <Button x:Name="BtnDeleteLocation" MinWidth="100" Height="34" Style="{DynamicResource SecondaryBtn}" Click="BtnDeleteLocation_Click">
+                    <TextBlock Text="Delete Location" />
+                </Button>
+            </StackPanel>
+            <DataGrid Grid.Row="1" x:Name="DgLocations" IsReadOnly="True" AutoGenerateColumns="False" Style="{DynamicResource ModernDataGrid}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Room" Binding="{Binding Room}" Width="*" />
+                    <DataGridTextColumn Header="Chamber" Binding="{Binding Chamber}" Width="80" />
+                    <DataGridTextColumn Header="Bed" Binding="{Binding Bed}" Width="80" />
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100" />
+                    <DataGridTextColumn Header="Bodies" Binding="{Binding Bodies.Count}" Width="60" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>
