@@ -15,6 +15,7 @@ public static class UpdateService
     private static readonly HttpClient Http = new();
     private static string _owner = "rajibia";
     private static string _repo = "mortuary-app";
+    private static string _token = "";
 
     public static string GitHubRepo
     {
@@ -30,6 +31,12 @@ public static class UpdateService
         }
     }
 
+    public static string Token
+    {
+        get => _token;
+        set => _token = value ?? "";
+    }
+
     public static Version CurrentVersion =>
         Assembly.GetExecutingAssembly().GetName().Version ?? new Version(1, 0, 0);
 
@@ -40,6 +47,8 @@ public static class UpdateService
             var url = $"https://api.github.com/repos/{_owner}/{_repo}/releases/latest";
             var req = new HttpRequestMessage(HttpMethod.Get, url);
             req.Headers.UserAgent.ParseAdd("MortuaryApp-Updater/1.0");
+            if (!string.IsNullOrEmpty(_token))
+                req.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
             var resp = await Http.SendAsync(req);
             if (!resp.IsSuccessStatusCode) return null;
