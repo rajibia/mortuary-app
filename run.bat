@@ -1,0 +1,6 @@
+@echo off
+cd /d "%~dp0"
+echo Building...
+dotnet build -c Debug >nul 2>&1
+echo Launching...
+start "" "bin\Debug\net10.0-windows\win-x64\MortuaryApp.exe"
